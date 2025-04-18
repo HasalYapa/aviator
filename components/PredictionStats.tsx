@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { roundsToGameData } from '@/lib/predictionEngine';
-import { getRecentRounds } from '@/lib/services/roundsService';
-import { getUserStats } from '@/lib/services/statsService';
+import { roundsToGameData } from '../lib/predictionEngine';
+import { getRecentRounds } from '../lib/services/roundsService';
+import { getUserStats } from '../lib/services/statsService';
 
 interface PredictionStats {
   accuracy: number;

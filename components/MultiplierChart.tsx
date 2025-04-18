@@ -12,8 +12,8 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { GameData, roundsToGameData } from '@/lib/predictionEngine';
-import { getRoundsForPeriod, subscribeToRounds } from '@/lib/services/roundsService';
+import { GameData, roundsToGameData } from '../lib/predictionEngine';
+import { getRoundsForPeriod, subscribeToRounds } from '../lib/services/roundsService';
 
 // Register ChartJS components
 ChartJS.register(

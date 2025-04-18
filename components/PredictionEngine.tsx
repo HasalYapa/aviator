@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { GameData, PredictionResult, generatePrediction, roundsToGameData } from '@/lib/predictionEngine';
-import { getRecentRounds, subscribeToRounds } from '@/lib/services/roundsService';
-import { addPrediction } from '@/lib/services/predictionsService';
+import { GameData, PredictionResult, generatePrediction, roundsToGameData } from '../lib/predictionEngine';
+import { getRecentRounds, subscribeToRounds } from '../lib/services/roundsService';
+import { addPrediction } from '../lib/services/predictionsService';
 
 export default function PredictionEngine() {
   const [gameData, setGameData] = useState<GameData[]>([]);

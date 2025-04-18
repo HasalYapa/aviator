@@ -2,20 +2,20 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { resetPassword } from '@/lib/auth';
+import { resetPassword } from '../../lib/auth';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setSuccess(false);
     setLoading(true);
-    
+
     try {
       await resetPassword(email);
       setSuccess(true);
@@ -26,29 +26,29 @@ export default function ForgotPassword() {
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold text-center mb-6 text-blue-600 dark:text-blue-400">
           Reset Password
         </h1>
-        
+
         {error && (
           <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 rounded-md text-sm">
             {error}
           </div>
         )}
-        
+
         {success ? (
           <div className="space-y-6">
             <div className="p-4 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-md">
               <p>Password reset email sent! Check your inbox for further instructions.</p>
             </div>
-            
+
             <div className="text-center">
-              <Link 
-                href="/login" 
+              <Link
+                href="/login"
                 className="text-blue-600 hover:text-blue-500 dark:text-blue-400 font-medium"
               >
                 Return to login
@@ -75,7 +75,7 @@ export default function ForgotPassword() {
                 We'll send a password reset link to this email address.
               </p>
             </div>
-            
+
             <div>
               <button
                 type="submit"
@@ -85,10 +85,10 @@ export default function ForgotPassword() {
                 {loading ? 'Sending...' : 'Send Reset Link'}
               </button>
             </div>
-            
+
             <div className="text-center">
-              <Link 
-                href="/login" 
+              <Link
+                href="/login"
                 className="text-blue-600 hover:text-blue-500 dark:text-blue-400 font-medium"
               >
                 Back to login

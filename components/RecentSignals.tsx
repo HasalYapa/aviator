@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getRecentRounds, Round, subscribeToRounds } from '@/lib/services/roundsService';
+import { getRecentRounds, Round, subscribeToRounds } from '../lib/services/roundsService';
 
 export default function RecentSignals() {
   const [recentGames, setRecentGames] = useState<Round[]>([]);

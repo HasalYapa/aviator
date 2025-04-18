@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { GameData, detectStreaks, calculateVolatility, determineTrend, roundsToGameData } from '@/lib/predictionEngine';
-import { getRecentRounds, subscribeToRounds } from '@/lib/services/roundsService';
+import { GameData, detectStreaks, calculateVolatility, determineTrend, roundsToGameData } from '../lib/predictionEngine';
+import { getRecentRounds, subscribeToRounds } from '../lib/services/roundsService';
 
 export default function PatternAnalysis() {
   const [gameData, setGameData] = useState<GameData[]>([]);

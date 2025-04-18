@@ -3,36 +3,36 @@
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import { signOut } from '@/lib/auth';
+import { signOut } from '../../lib/auth';
 
 // Dynamically import components with no SSR to avoid hydration issues
 const MultiplierChart = dynamic(
-  () => import('@/components/MultiplierChart'),
+  () => import('../../components/MultiplierChart'),
   { ssr: false }
 );
 
 const PredictionEngine = dynamic(
-  () => import('@/components/PredictionEngine'),
+  () => import('../../components/PredictionEngine'),
   { ssr: false }
 );
 
 const RecentSignals = dynamic(
-  () => import('@/components/RecentSignals'),
+  () => import('../../components/RecentSignals'),
   { ssr: false }
 );
 
 const PatternAnalysis = dynamic(
-  () => import('@/components/PatternAnalysis'),
+  () => import('../../components/PatternAnalysis'),
   { ssr: false }
 );
 
 const PredictionStats = dynamic(
-  () => import('@/components/PredictionStats'),
+  () => import('../../components/PredictionStats'),
   { ssr: false }
 );
 
 const NotificationSettings = dynamic(
-  () => import('@/components/NotificationSettings'),
+  () => import('../../components/NotificationSettings'),
   { ssr: false }
 );
 
