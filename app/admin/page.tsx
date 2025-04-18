@@ -61,34 +61,34 @@ export default function Admin() {
       description: 'Base confidence level for predictions before adjustments'
     }
   ]);
-  
-  const [userStats, setUserStats] = useState({
+
+  const [userStats] = useState({
     totalUsers: 1245,
     activeUsers: 876,
     premiumUsers: 342,
     newUsersToday: 28
   });
-  
-  const [systemStats, setSystemStats] = useState({
+
+  const [systemStats] = useState({
     totalPredictions: 45678,
     accurateHits: 34256,
     accuracy: 75,
     avgResponseTime: 0.8
   });
-  
+
   const handleParameterChange = (id: string, value: number) => {
-    setParameters(prevParams => 
-      prevParams.map(param => 
+    setParameters(prevParams =>
+      prevParams.map(param =>
         param.id === id ? { ...param, value } : param
       )
     );
   };
-  
+
   const handleSaveParameters = () => {
     // In a real app, this would save to a database
     alert('Parameters saved successfully!');
   };
-  
+
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
       {/* Header */}
@@ -96,14 +96,14 @@ export default function Admin() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400">Admin Dashboard</h1>
           <div className="flex items-center space-x-4">
-            <Link 
-              href="/dashboard" 
+            <Link
+              href="/dashboard"
               className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
             >
               Main Dashboard
             </Link>
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
             >
               Logout
@@ -139,7 +139,7 @@ export default function Admin() {
                 </div>
               </div>
             </div>
-            
+
             {/* System Stats */}
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
               <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">System Performance</h2>
@@ -162,7 +162,7 @@ export default function Admin() {
                 </div>
               </div>
             </div>
-            
+
             {/* Quick Actions */}
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
               <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Quick Actions</h2>
@@ -182,12 +182,12 @@ export default function Admin() {
               </div>
             </div>
           </div>
-          
+
           {/* Right Column - Prediction Parameters */}
           <div className="lg:col-span-2">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
               <h2 className="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-200">Prediction Engine Parameters</h2>
-              
+
               <div className="space-y-6">
                 {parameters.map(param => (
                   <div key={param.id} className="space-y-2">
@@ -214,9 +214,9 @@ export default function Admin() {
                     </p>
                   </div>
                 ))}
-                
+
                 <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <button 
+                  <button
                     onClick={handleSaveParameters}
                     className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-300"
                   >
@@ -225,11 +225,11 @@ export default function Admin() {
                 </div>
               </div>
             </div>
-            
+
             {/* Data Upload Section */}
             <div className="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow p-6">
               <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Upload Training Data</h2>
-              
+
               <div className="space-y-4">
                 <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
                   <div className="space-y-2">
@@ -248,7 +248,7 @@ export default function Admin() {
                     </p>
                   </div>
                 </div>
-                
+
                 <button className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-300">
                   Process Data
                 </button>

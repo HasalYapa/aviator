@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { addNotification } from '../lib/services/notificationsService';
 
 interface NotificationSetting {

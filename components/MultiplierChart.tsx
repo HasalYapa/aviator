@@ -44,7 +44,7 @@ export default function MultiplierChart({ period }: MultiplierChartProps) {
     fetchData();
 
     // Subscribe to new rounds
-    const subscription = subscribeToRounds((payload) => {
+    const subscription = subscribeToRounds((_payload) => {
       // When a new round is added, refresh the data
       fetchData();
     });

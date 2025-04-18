@@ -41,7 +41,7 @@ export default function PredictionEngine() {
     fetchData();
 
     // Subscribe to new rounds
-    const subscription = subscribeToRounds(async (payload) => {
+    const subscription = subscribeToRounds(async (_payload) => {
       // When a new round is added, refresh the data and update prediction
       const rounds = await getRecentRounds(100);
       const gameDataFromRounds = roundsToGameData(rounds);

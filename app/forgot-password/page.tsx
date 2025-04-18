@@ -72,7 +72,7 @@ export default function ForgotPassword() {
                 placeholder="your@email.com"
               />
               <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                We'll send a password reset link to this email address.
+                We&apos;ll send a password reset link to this email address.
               </p>
             </div>
 
