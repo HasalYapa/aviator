@@ -12,3 +12,9 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
 if (!supabaseUrl || !supabaseAnonKey) {
   console.error('Supabase URL or Anon Key is missing. Please check your .env.local file.');
 }
+
+// Log Supabase configuration for debugging (only in development)
+if (process.env.NODE_ENV === 'development') {
+  console.log('Supabase URL:', supabaseUrl ? 'Set' : 'Not set');
+  console.log('Supabase Anon Key:', supabaseAnonKey ? 'Set' : 'Not set');
+}

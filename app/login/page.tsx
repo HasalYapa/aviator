@@ -19,10 +19,13 @@ export default function Login() {
     setLoading(true);
 
     try {
-      await signIn({ email, password });
+      console.log('Attempting to sign in with:', { email });
+      const result = await signIn({ email, password });
+      console.log('Sign in successful:', result);
       router.push('/dashboard');
     } catch (err: any) {
-      setError(err.message || 'Failed to sign in');
+      console.error('Sign in error:', err);
+      setError(err.message || 'Failed to sign in. Please check your credentials and try again.');
       setLoading(false);
     }
   };

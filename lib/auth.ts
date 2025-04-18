@@ -40,15 +40,29 @@ export async function signUp({ email, password, name }: UserRegistration) {
  */
 export async function signIn({ email, password }: UserCredentials) {
   try {
+    console.log('Signing in with Supabase:', { email });
+
+    // Check if Supabase is properly initialized
+    if (!supabase) {
+      throw new Error('Supabase client is not initialized');
+    }
+
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
     if (error) {
+      console.error('Supabase auth error:', error);
       throw error;
     }
 
+    if (!data.user || !data.session) {
+      console.error('No user or session returned from Supabase');
+      throw new Error('Authentication failed. Please try again.');
+    }
+
+    console.log('Sign in successful, user:', data.user.id);
     return { user: data.user, session: data.session };
   } catch (error) {
     console.error('Error signing in:', error);
@@ -62,11 +76,11 @@ export async function signIn({ email, password }: UserCredentials) {
 export async function signOut() {
   try {
     const { error } = await supabase.auth.signOut();
-    
+
     if (error) {
       throw error;
     }
-    
+
     return true;
   } catch (error) {
     console.error('Error signing out:', error);
@@ -80,11 +94,11 @@ export async function signOut() {
 export async function getCurrentSession() {
   try {
     const { data, error } = await supabase.auth.getSession();
-    
+
     if (error) {
       throw error;
     }
-    
+
     return data.session;
   } catch (error) {
     console.error('Error getting session:', error);
@@ -98,11 +112,11 @@ export async function getCurrentSession() {
 export async function getCurrentUser() {
   try {
     const { data, error } = await supabase.auth.getUser();
-    
+
     if (error) {
       throw error;
     }
-    
+
     return data.user;
   } catch (error) {
     console.error('Error getting user:', error);
@@ -118,11 +132,11 @@ export async function resetPassword(email: string) {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,
     });
-    
+
     if (error) {
       throw error;
     }
-    
+
     return true;
   } catch (error) {
     console.error('Error resetting password:', error);
