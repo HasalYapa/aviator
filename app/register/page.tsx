@@ -1,12 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { signUp } from '../../lib/auth';
+import { useAuth } from '../../lib/AuthContext';
 
 export default function Register() {
   const router = useRouter();
+  const { signUp, user, isLoading: authLoading } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,6 +15,13 @@ export default function Register() {
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (user && !authLoading) {
+      router.push('/dashboard');
+    }
+  }, [user, authLoading, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,9 +41,14 @@ export default function Register() {
     setLoading(true);
 
     try {
-      await signUp({ name, email, password });
-      // Force a hard navigation instead of client-side routing
-      window.location.href = '/dashboard';
+      await signUp(email, password, name);
+      console.log('Sign up successful');
+
+      // Add a small delay to ensure state is updated
+      setTimeout(() => {
+        // Force a hard navigation instead of client-side routing
+        window.location.href = '/dashboard';
+      }, 500);
     } catch (err: any) {
       setError(err.message || 'Failed to sign up');
       setLoading(false);

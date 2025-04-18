@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import { signOut } from '../../lib/auth';
-import SessionCheck from '../../components/SessionCheck';
+import { useAuth } from '../../lib/AuthContext';
+import { useEffect } from 'react';
 
 // Dynamically import components with no SSR to avoid hydration issues
 const MultiplierChart = dynamic(
@@ -39,6 +39,14 @@ const NotificationSettings = dynamic(
 
 export default function Dashboard() {
   const router = useRouter();
+  const { user, signOut, isLoading } = useAuth();
+
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, isLoading, router]);
 
   const handleSignOut = async () => {
     try {
@@ -49,9 +57,23 @@ export default function Dashboard() {
       console.error('Error signing out:', error);
     }
   };
+
+  // Show loading state while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  // If not authenticated and not loading, the useEffect will redirect
+  if (!user) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-      <SessionCheck />
       {/* Header */}
       <header className="bg-white dark:bg-gray-800 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">

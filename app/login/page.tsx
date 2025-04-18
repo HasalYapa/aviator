@@ -1,17 +1,25 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { signIn } from '../../lib/auth';
+import { useAuth } from '../../lib/AuthContext';
 
 export default function Login() {
   const router = useRouter();
+  const { signIn, user, isLoading: authLoading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (user && !authLoading) {
+      router.push('/dashboard');
+    }
+  }, [user, authLoading, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,10 +28,10 @@ export default function Login() {
 
     try {
       console.log('Attempting to sign in with:', { email });
-      const result = await signIn({ email, password });
-      console.log('Sign in successful:', result);
+      await signIn(email, password);
+      console.log('Sign in successful');
 
-      // Add a small delay to ensure cookies are set
+      // Add a small delay to ensure state is updated
       setTimeout(() => {
         // Force a hard navigation instead of client-side routing
         window.location.href = '/dashboard';

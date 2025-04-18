@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import SessionCheck from '../../components/SessionCheck';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '../../lib/AuthContext';
 
 interface PredictionParameter {
   id: string;
@@ -15,6 +16,30 @@ interface PredictionParameter {
 }
 
 export default function Admin() {
+  const router = useRouter();
+  const { user, isLoading } = useAuth();
+
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, isLoading, router]);
+
+  // Show loading state while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  // If not authenticated and not loading, the useEffect will redirect
+  if (!user) {
+    return null;
+  }
+
   const [parameters, setParameters] = useState<PredictionParameter[]>([
     {
       id: 'movingAvgWindow',
@@ -92,7 +117,6 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-      <SessionCheck />
       {/* Header */}
       <header className="bg-white dark:bg-gray-800 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">

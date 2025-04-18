@@ -3,28 +3,18 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { getCurrentUser, signOut } from '../../lib/auth';
-import SessionCheck from '../../components/SessionCheck';
+import { useAuth } from '../../lib/AuthContext';
 
 export default function Profile() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const { user, signOut, isLoading } = useAuth();
 
+  // Redirect if not authenticated
   useEffect(() => {
-    async function loadUser() {
-      try {
-        const userData = await getCurrentUser();
-        setUser(userData);
-      } catch (error) {
-        console.error('Error loading user:', error);
-      } finally {
-        setLoading(false);
-      }
+    if (!isLoading && !user) {
+      router.push('/login');
     }
-
-    loadUser();
-  }, []);
+  }, [user, isLoading, router]);
 
   const handleSignOut = async () => {
     try {
@@ -36,17 +26,22 @@ export default function Profile() {
     }
   };
 
-  if (loading) {
+  // Show loading state while checking authentication
+  if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
     );
   }
 
+  // If not authenticated and not loading, the useEffect will redirect
+  if (!user) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-      <SessionCheck />
       {/* Header */}
       <header className="bg-white dark:bg-gray-800 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
