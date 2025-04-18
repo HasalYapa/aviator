@@ -34,7 +34,8 @@ export default function Register() {
 
     try {
       await signUp({ name, email, password });
-      router.push('/dashboard');
+      // Force a hard navigation instead of client-side routing
+      window.location.href = '/dashboard';
     } catch (err: any) {
       setError(err.message || 'Failed to sign up');
       setLoading(false);

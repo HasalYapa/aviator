@@ -28,7 +28,8 @@ export default function Profile() {
   const handleSignOut = async () => {
     try {
       await signOut();
-      router.push('/');
+      // Force a hard navigation instead of client-side routing
+      window.location.href = '/';
     } catch (error) {
       console.error('Error signing out:', error);
     }

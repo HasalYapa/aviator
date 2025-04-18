@@ -22,7 +22,9 @@ export default function Login() {
       console.log('Attempting to sign in with:', { email });
       const result = await signIn({ email, password });
       console.log('Sign in successful:', result);
-      router.push('/dashboard');
+
+      // Force a hard navigation instead of client-side routing
+      window.location.href = '/dashboard';
     } catch (err: any) {
       console.error('Sign in error:', err);
       setError(err.message || 'Failed to sign in. Please check your credentials and try again.');
