@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { getCurrentUser, signOut } from '../../lib/auth';
+import SessionCheck from '../../components/SessionCheck';
 
 export default function Profile() {
   const router = useRouter();
@@ -45,6 +46,7 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+      <SessionCheck />
       {/* Header */}
       <header className="bg-white dark:bg-gray-800 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">

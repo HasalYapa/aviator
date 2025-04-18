@@ -23,8 +23,11 @@ export default function Login() {
       const result = await signIn({ email, password });
       console.log('Sign in successful:', result);
 
-      // Force a hard navigation instead of client-side routing
-      window.location.href = '/dashboard';
+      // Add a small delay to ensure cookies are set
+      setTimeout(() => {
+        // Force a hard navigation instead of client-side routing
+        window.location.href = '/dashboard';
+      }, 500);
     } catch (err: any) {
       console.error('Sign in error:', err);
       setError(err.message || 'Failed to sign in. Please check your credentials and try again.');

@@ -47,6 +47,10 @@ export async function signIn({ email, password }: UserCredentials) {
       throw new Error('Supabase client is not initialized');
     }
 
+    // First, sign out to clear any existing sessions
+    await supabase.auth.signOut();
+
+    // Then sign in with the provided credentials
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -61,6 +65,16 @@ export async function signIn({ email, password }: UserCredentials) {
       console.error('No user or session returned from Supabase');
       throw new Error('Authentication failed. Please try again.');
     }
+
+    // Explicitly set the session in the browser
+    await supabase.auth.setSession({
+      access_token: data.session.access_token,
+      refresh_token: data.session.refresh_token
+    });
+
+    // Verify the session was set
+    const { data: sessionCheck } = await supabase.auth.getSession();
+    console.log('Session verification:', !!sessionCheck.session);
 
     console.log('Sign in successful, user:', data.user.id);
     return { user: data.user, session: data.session };
